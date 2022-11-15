@@ -1,0 +1,248 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: rgb(28, 28, 28);
+}
+
+.content {
+  width: min(90%, 1200px);
+  margin-inline: auto;
+}
+
+h2 {
+  font-size: clamp(3rem, 10vw + 1rem, 5rem);
+  line-height: 1;
+}
+
+.grid-autofit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1em;
+}
+
+/* Slide */
+
+.slide {
+  --height: 300px;
+  --arrow-color: white;
+  --arrow-idle-opacity: 0.1;
+  --arrow-size: 50px;
+  width: 100%;
+  background-color: rgb(42, 42, 42);
+  border-top: 3px solid white;
+  border-bottom: 3px solid white;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+}
+
+.slide img {
+  width: 100%;
+  max-height: var(--height);
+  object-fit: cover;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  left: 0px;
+  transition: left 1s ease;
+  /* Remove the ability to right-click-save the image */
+  pointer-events: none;
+}
+
+/* Under dev: Use divs with background-image instead of img */
+/* .slide-image {
+  width: 100%;
+  height: 300px;
+  max-height: var(--height);
+  object-fit: cover;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  left: 0px;
+  transition: left 1s ease;
+} */
+
+.slide ul {
+  position: relative;
+  left: 0px;
+  list-style: none;
+  transition: left 1s ease;
+  white-space: nowrap;
+  /* Following settings removes the padding */
+  line-height: 0;
+  font-size: 0;
+}
+
+.slide li {
+  display: inline;
+  /* display: inline-block; */
+  /* Change to: inline for max-size, inline-block for fit height*/
+}
+
+.slide-expanded {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border: 10px solid white;
+  z-index: 999;
+}
+
+.slide-expanded img {
+  max-height: 100vh;
+  height: 100vh;
+  width: 100vw;
+}
+
+.slide-arrow {
+  /* background-color: red; */
+  border-left: 7px solid var(--arrow-color);
+  border-bottom: 7px solid var(--arrow-color);
+  opacity: var(--arrow-idle-opacity);
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  left: 35px;
+  top: 50%;
+  transform-origin: center;
+  transform: translate(0, -50%) rotate(45deg);
+  transition: opacity 0.5s ease;
+}
+
+.slide-toggle-symbol {
+  position: absolute;
+  display: block;
+  background-color: white;
+  opacity: 0;
+  width: 75px;
+  height: 7px;
+  left: 50%;
+  top: 50%;
+  transform-origin: center;
+  transform: translate(-50%, -50%);
+  transition: all 0.5s ease;
+  z-index: 99;
+}
+.slide-toggle-symbol::before {
+  position: absolute;
+  display: block;
+  background-color: white;
+  width: 75px;
+  height: 7px;
+  left: 50%;
+  top: 50%;
+  content: "";
+  transform-origin: center;
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.slide-toggle-close {
+  opacity: 0;
+  transform-origin: center;
+  transform: translate(-50%, -50%) rotate(45deg);
+  transition: all 1s ease-out;
+}
+
+.slide-arrow-right {
+  /* background-color: blue; */
+  left: auto;
+  transform: translate(0, -50%) rotate(-135deg);
+  right: 35px;
+}
+
+.slide-no-transition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}
+
+.overlay-logotype {
+  position: absolute;
+  width: 200px;
+  height: 80px;
+  background-image: url("../images/overlay_logotype.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  left: 50%;
+  bottom: 10px;
+  opacity: 0;
+  transform-origin: center;
+  transform: translate(-50%, 0);
+  z-index: 1;
+  transition: none;
+}
+
+.overlay-logotype-show {
+  opacity: 1;
+  transition: opacity 0.1s ease;
+}
+
+.slide-nav-bar {
+  position: absolute;
+  width: 100%;
+  height: 40px;
+  bottom: 5px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  transition: all 1s ease;
+  z-index: 99;
+}
+
+.slide-nav-bar-active {
+  opacity: 1;
+  gap: 16px;
+}
+
+.slide-nav-bar-active div {
+  border: 2px solid white;
+  transition: all 0.2s ease;
+}
+
+.slide-nav-bar-hide {
+  top: 0px;
+  opacity: 0;
+  transition: all 5s ease;
+}
+
+.slide-nav-bar-hide:hover {
+  opacity: 1;
+}
+
+.slide-nav-indicator {
+  background-color: rgb(117, 117, 117);
+  border: 1px solid white;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: block;
+  opacity: 0.6;
+}
+
+.slide-nav-indicator:hover {
+  background-color: white;
+  opacity: 1;
+}
+
+.slide-nav-active {
+  background-color: white;
+  opacity: 0.8;
+}
